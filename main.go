@@ -23,6 +23,11 @@ func dbInit() {
 
 func dbInsert(text string, status string) {
 	db, err := gorm.Open("sqlite3", "test.sqlite3")
+	if err != nil {
+		panic("DB couldn't open.")
+	}
+	db.Create(&Todo{Text: text, Status: status})
+	defer db.Commit()
 }
 
 func main() {
